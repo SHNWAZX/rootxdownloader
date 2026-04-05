@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Loader2, AlertCircle } from "lucide-react";
 
 interface DownloaderInputProps {
   placeholder: string;
@@ -48,81 +48,91 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6">
-      <div className="glass-panel rounded-xl p-1.5 flex gap-2">
+    <div className="w-full max-w-2xl mx-auto space-y-5 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+      {/* Input bar */}
+      <div className="glass-panel-solid rounded-2xl p-2 flex gap-2 transition-all duration-300 hover:shadow-lg">
         <input
           type="text"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleDownload()}
           placeholder={placeholder}
-          className="flex-1 glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/40 transition-colors font-display text-sm"
+          className="flex-1 bg-transparent rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground focus:outline-none font-body text-sm"
         />
         <button
           onClick={handleDownload}
           disabled={loading || !url.trim()}
-          className={`px-5 py-3 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed ${platformClass}`}
+          className={`px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-2.5 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 ${platformClass}`}
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <Download className="h-4 w-4" />
           )}
-          {loading ? "Fetching..." : "Download"}
+          <span className="hidden sm:inline">{loading ? "Fetching..." : "Download"}</span>
         </button>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="glass-panel rounded-xl p-4 border-destructive/30 text-destructive text-sm text-center">
+        <div className="glass-panel rounded-2xl p-4 flex items-center gap-3 text-destructive text-sm animate-fade-in border-destructive/20">
+          <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>
       )}
 
+      {/* Result */}
       {result && (
-        <div className="glass-panel rounded-xl p-5 space-y-4">
+        <div className="glass-panel-solid rounded-2xl overflow-hidden animate-slide-up">
           {result.thumbnail && (
-            <img
-              src={result.thumbnail}
-              alt={result.title || "Thumbnail"}
-              className="w-full max-h-64 object-cover rounded-lg"
-            />
-          )}
-          {result.title && (
-            <h3 className="font-display font-semibold text-foreground text-lg leading-tight">
-              {result.title}
-            </h3>
-          )}
-
-          {result.medias && result.medias.length > 0 && (
-            <div className="space-y-2">
-              {result.medias.map((media, i) => (
-                <a
-                  key={i}
-                  href={media.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between glass-input rounded-lg px-4 py-3 hover:border-primary/40 transition-colors group"
-                >
-                  <span className="text-sm text-secondary-foreground">
-                    {media.quality || media.extension || media.type || `Option ${i + 1}`}
-                  </span>
-                  <Download className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                </a>
-              ))}
+            <div className="relative overflow-hidden">
+              <img
+                src={result.thumbnail}
+                alt={result.title || "Thumbnail"}
+                className="w-full h-48 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
             </div>
           )}
+          <div className="p-5 space-y-4">
+            {result.title && (
+              <h3 className="font-display font-semibold text-foreground text-base leading-snug">
+                {result.title}
+              </h3>
+            )}
 
-          {result.url && (!result.medias || result.medias.length === 0) && (
-            <a
-              href={result.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg font-medium text-sm transition-all ${platformClass}`}
-            >
-              <Download className="h-4 w-4" />
-              Download Now
-            </a>
-          )}
+            {result.medias && result.medias.length > 0 && (
+              <div className="space-y-2">
+                {result.medias.map((media, i) => (
+                  <a
+                    key={i}
+                    href={media.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between glass-input rounded-xl px-4 py-3 hover:bg-accent/50 transition-all duration-200 group animate-fade-in"
+                    style={{ animationDelay: `${i * 0.08}s` }}
+                  >
+                    <span className="text-sm text-secondary-foreground font-medium">
+                      {media.quality || media.extension || media.type || `Option ${i + 1}`}
+                    </span>
+                    <Download className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
+                  </a>
+                ))}
+              </div>
+            )}
+
+            {result.url && (!result.medias || result.medias.length === 0) && (
+              <a
+                href={result.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 active:scale-95 ${platformClass}`}
+              >
+                <Download className="h-4 w-4" />
+                Download Now
+              </a>
+            )}
+          </div>
         </div>
       )}
     </div>

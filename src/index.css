@@ -2,63 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
-    --background: 220 20% 7%;
-    --foreground: 220 10% 92%;
+    --background: 220 30% 96%;
+    --foreground: 220 25% 12%;
 
-    --card: 220 18% 11%;
-    --card-foreground: 220 10% 92%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 12%;
 
-    --popover: 220 18% 11%;
-    --popover-foreground: 220 10% 92%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 200 80% 55%;
-    --primary-foreground: 220 20% 7%;
+    --primary: 220 75% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 16%;
-    --secondary-foreground: 220 10% 80%;
+    --secondary: 220 20% 92%;
+    --secondary-foreground: 220 25% 25%;
 
-    --muted: 220 15% 14%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 220 20% 94%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 200 60% 45%;
-    --accent-foreground: 220 10% 92%;
+    --accent: 220 60% 95%;
+    --accent-foreground: 220 75% 45%;
 
-    --destructive: 0 65% 55%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 200 80% 55%;
+    --border: 220 20% 88%;
+    --input: 220 20% 90%;
+    --ring: 220 75% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Platform colors */
     --youtube: 0 80% 50%;
     --instagram: 330 70% 55%;
     --facebook: 220 70% 50%;
     --pinterest: 0 70% 45%;
-    --snapchat: 50 95% 55%;
+    --snapchat: 50 95% 50%;
 
-    /* Glass */
-    --glass-bg: 220 18% 12%;
-    --glass-border: 220 15% 22%;
+    /* Glass tokens */
+    --glass-bg: 0 0% 100%;
+    --glass-border: 220 20% 85%;
+    --glass-shadow: 220 40% 70%;
 
     /* Font */
     --font-display: 'Space Grotesk', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Inter', sans-serif;
 
-    --sidebar-background: 220 20% 7%;
-    --sidebar-foreground: 220 10% 80%;
-    --sidebar-primary: 200 80% 55%;
-    --sidebar-primary-foreground: 220 20% 7%;
-    --sidebar-accent: 220 15% 14%;
-    --sidebar-accent-foreground: 220 10% 92%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 200 80% 55%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 15% 30%;
+    --sidebar-primary: 220 75% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 94%;
+    --sidebar-accent-foreground: 220 25% 12%;
+    --sidebar-border: 220 20% 88%;
+    --sidebar-ring: 220 75% 55%;
   }
 }
 
@@ -69,43 +70,109 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
   }
 }
 
 @layer components {
   .glass-panel {
-    background: hsl(var(--glass-bg) / 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--glass-border) / 0.5);
+    background: hsl(var(--glass-bg) / 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--glass-border) / 0.6);
+    box-shadow: 0 4px 24px -4px hsl(var(--glass-shadow) / 0.08);
+  }
+
+  .glass-panel-solid {
+    background: hsl(var(--glass-bg) / 0.8);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid hsl(var(--glass-border) / 0.7);
+    box-shadow: 0 8px 32px -8px hsl(var(--glass-shadow) / 0.12);
   }
 
   .glass-input {
-    background: hsl(var(--glass-bg) / 0.4);
+    background: hsl(var(--glass-bg) / 0.5);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--glass-border) / 0.4);
+    border: 1px solid hsl(var(--glass-border) / 0.5);
   }
 
   .platform-tab {
-    @apply px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200;
-    background: hsl(var(--glass-bg) / 0.3);
+    @apply px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300;
+    background: hsl(var(--glass-bg) / 0.4);
     border: 1px solid transparent;
   }
 
   .platform-tab:hover {
-    background: hsl(var(--glass-bg) / 0.6);
-    border-color: hsl(var(--glass-border) / 0.5);
+    background: hsl(var(--glass-bg) / 0.7);
+    border-color: hsl(var(--glass-border) / 0.6);
+    transform: translateY(-1px);
   }
 
   .platform-tab.active {
-    border-color: hsl(var(--glass-border) / 0.7);
+    border-color: hsl(var(--glass-border) / 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px -4px hsl(var(--glass-shadow) / 0.12);
   }
 
-  .platform-tab.active.yt { background: hsl(var(--youtube) / 0.15); border-color: hsl(var(--youtube) / 0.4); color: hsl(var(--youtube)); }
-  .platform-tab.active.insta { background: hsl(var(--instagram) / 0.15); border-color: hsl(var(--instagram) / 0.4); color: hsl(var(--instagram)); }
-  .platform-tab.active.fb { background: hsl(var(--facebook) / 0.15); border-color: hsl(var(--facebook) / 0.4); color: hsl(var(--facebook)); }
-  .platform-tab.active.pin { background: hsl(var(--pinterest) / 0.15); border-color: hsl(var(--pinterest) / 0.4); color: hsl(var(--pinterest)); }
-  .platform-tab.active.snap { background: hsl(var(--snapchat) / 0.15); border-color: hsl(var(--snapchat) / 0.4); color: hsl(var(--snapchat)); }
+  .platform-tab.active.yt { background: hsl(var(--youtube) / 0.1); border-color: hsl(var(--youtube) / 0.35); color: hsl(var(--youtube)); }
+  .platform-tab.active.insta { background: hsl(var(--instagram) / 0.1); border-color: hsl(var(--instagram) / 0.35); color: hsl(var(--instagram)); }
+  .platform-tab.active.fb { background: hsl(var(--facebook) / 0.1); border-color: hsl(var(--facebook) / 0.35); color: hsl(var(--facebook)); }
+  .platform-tab.active.pin { background: hsl(var(--pinterest) / 0.1); border-color: hsl(var(--pinterest) / 0.35); color: hsl(var(--pinterest)); }
+  .platform-tab.active.snap { background: hsl(var(--snapchat) / 0.1); border-color: hsl(var(--snapchat) / 0.35); color: hsl(var(--snapchat)); }
+
+  /* Animated gradient background blobs */
+  .bg-blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-blob-1 {
+    width: 500px;
+    height: 500px;
+    top: -10%;
+    right: -5%;
+    background: hsl(220 80% 70% / 0.3);
+    animation: blob-float 12s ease-in-out infinite;
+  }
+
+  .bg-blob-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -5%;
+    left: -5%;
+    background: hsl(280 60% 70% / 0.2);
+    animation: blob-float 15s ease-in-out infinite reverse;
+  }
+
+  .bg-blob-3 {
+    width: 300px;
+    height: 300px;
+    top: 40%;
+    left: 30%;
+    background: hsl(180 60% 70% / 0.15);
+    animation: blob-float 10s ease-in-out infinite 3s;
+  }
+
+  /* Stagger animation delays */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
 }
