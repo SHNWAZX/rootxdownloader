@@ -13,11 +13,11 @@ const PlatformTab = ({ label, icon, active, platformKey, onClick, index }: Platf
   return (
     <button
       onClick={onClick}
-      className={`platform-tab flex items-center gap-2 animate-fade-in ${active ? `active ${platformKey}` : ""}`}
-      style={{ animationDelay: `${index * 0.06}s` }}
+      className={`platform-tab flex items-center gap-2 animate-fade-up ${active ? `active ${platformKey}` : ""}`}
+      style={{ animationDelay: `${0.4 + index * 0.06}s` }}
     >
       {icon}
-      <span className="hidden sm:inline">{label}</span>
+      <span>{label}</span>
     </button>
   );
 };

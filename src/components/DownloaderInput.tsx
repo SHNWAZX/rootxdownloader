@@ -29,17 +29,13 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
     setLoading(true);
     setError("");
     setResult(null);
-
     try {
       const res = await fetch(
         `https://rootx-downloader-api.awsvps844.workers.dev/?url=${encodeURIComponent(url.trim())}`
       );
       const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setResult(data);
-      }
+      if (data.error) setError(data.error);
+      else setResult(data);
     } catch {
       setError("Failed to fetch. Please check the URL and try again.");
     } finally {
@@ -48,9 +44,8 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-5 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-      {/* Input bar */}
-      <div className="glass-panel-solid rounded-2xl p-2 flex gap-2 transition-all duration-300 hover:shadow-lg">
+    <div className="w-full max-w-2xl mx-auto space-y-5 animate-fade-up" style={{ animationDelay: "0.35s" }}>
+      <div className="glass-card-solid rounded-2xl p-2 flex gap-2 transition-all duration-300">
         <input
           type="text"
           value={url}
@@ -64,43 +59,30 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
           disabled={loading || !url.trim()}
           className={`px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-2.5 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 ${platformClass}`}
         >
-          {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
           <span className="hidden sm:inline">{loading ? "Fetching..." : "Download"}</span>
         </button>
       </div>
 
-      {/* Error */}
       {error && (
-        <div className="glass-panel rounded-2xl p-4 flex items-center gap-3 text-destructive text-sm animate-fade-in border-destructive/20">
+        <div className="glass-card rounded-2xl p-4 flex items-center gap-3 text-destructive text-sm animate-scale-in border-destructive/20">
           <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>
       )}
 
-      {/* Result */}
       {result && (
-        <div className="glass-panel-solid rounded-2xl overflow-hidden animate-slide-up">
+        <div className="glass-card-solid rounded-2xl overflow-hidden animate-slide-up">
           {result.thumbnail && (
             <div className="relative overflow-hidden">
-              <img
-                src={result.thumbnail}
-                alt={result.title || "Thumbnail"}
-                className="w-full h-48 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+              <img src={result.thumbnail} alt={result.title || "Thumbnail"} className="w-full h-48 object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
             </div>
           )}
           <div className="p-5 space-y-4">
             {result.title && (
-              <h3 className="font-display font-semibold text-foreground text-base leading-snug">
-                {result.title}
-              </h3>
+              <h3 className="font-display font-semibold text-foreground text-base leading-snug">{result.title}</h3>
             )}
-
             {result.medias && result.medias.length > 0 && (
               <div className="space-y-2">
                 {result.medias.map((media, i) => (
@@ -109,18 +91,17 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
                     href={media.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between glass-input rounded-xl px-4 py-3 hover:bg-accent/50 transition-all duration-200 group animate-fade-in"
-                    style={{ animationDelay: `${i * 0.08}s` }}
+                    className="flex items-center justify-between glass-input-bar rounded-xl px-4 py-3 hover:bg-accent/30 transition-all duration-200 group animate-fade-up"
+                    style={{ animationDelay: `${i * 0.06}s` }}
                   >
                     <span className="text-sm text-secondary-foreground font-medium">
                       {media.quality || media.extension || media.type || `Option ${i + 1}`}
                     </span>
-                    <Download className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
+                    <Download className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </a>
                 ))}
               </div>
             )}
-
             {result.url && (!result.medias || result.medias.length === 0) && (
               <a
                 href={result.url}
