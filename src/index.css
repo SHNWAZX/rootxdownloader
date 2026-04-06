@@ -36,6 +36,14 @@
 
     --radius: 1.25rem;
 
+    /* Platform colors */
+    --youtube: 0 80% 50%;
+    --instagram: 330 70% 55%;
+    --facebook: 220 70% 50%;
+    --pinterest: 0 70% 45%;
+    --snapchat: 50 95% 50%;
+    --tiktok: 0 0% 10%;
+
     /* Glass tokens */
     --glass-bg: 0 0% 100%;
     --glass-border: 220 20% 86%;
@@ -131,8 +139,55 @@
     transform: translateY(0) scale(0.97);
   }
 
+  /* ── Platform tabs ── */
+  .platform-tab {
+    @apply flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer;
+    color: hsl(var(--muted-foreground));
+    background: transparent;
+    border: 1.5px solid transparent;
+  }
+  .platform-tab:hover {
+    background: hsl(var(--glass-bg) / 0.6);
+    border-color: hsl(var(--glass-border) / 0.4);
+    transform: translateY(-1px);
+  }
+  .platform-tab.active {
+    color: hsl(var(--primary-foreground));
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px -4px hsl(var(--glass-shadow) / 0.2);
+  }
+  .platform-tab.active.youtube { background: hsl(var(--youtube)); }
+  .platform-tab.active.instagram { background: hsl(var(--instagram)); }
+  .platform-tab.active.facebook { background: hsl(var(--facebook)); }
+  .platform-tab.active.pinterest { background: hsl(var(--pinterest)); }
+  .platform-tab.active.snapchat { background: hsl(var(--snapchat)); color: hsl(var(--foreground)); }
+  .platform-tab.active.tiktok { background: hsl(var(--tiktok)); }
+
+  /* ── Sub-tabs (Post / Reel / Story) ── */
+  .sub-tab {
+    @apply flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer;
+    color: hsl(var(--muted-foreground));
+    background: transparent;
+  }
+  .sub-tab:hover {
+    color: hsl(var(--foreground));
+    background: hsl(var(--glass-bg) / 0.5);
+  }
+  .sub-tab.active {
+    color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.08);
+    border: 1px solid hsl(var(--primary) / 0.2);
+  }
+
   /* ── Decorative blobs ── */
   .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
