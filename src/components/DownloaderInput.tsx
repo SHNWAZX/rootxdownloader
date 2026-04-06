@@ -44,44 +44,47 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-5 animate-fade-up" style={{ animationDelay: "0.35s" }}>
-      <div className="glass-card-solid rounded-2xl p-2 flex gap-2 transition-all duration-300">
+    <div className="w-full space-y-5">
+      {/* Input bar */}
+      <div className="glass-input rounded-2xl p-2 flex gap-2">
         <input
           type="text"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleDownload()}
           placeholder={placeholder}
-          className="flex-1 bg-transparent rounded-xl px-5 py-3.5 text-foreground placeholder:text-muted-foreground focus:outline-none font-body text-sm"
+          className="flex-1 bg-transparent rounded-xl px-4 sm:px-5 py-3 sm:py-3.5 text-foreground placeholder:text-muted-foreground focus:outline-none text-sm"
         />
         <button
           onClick={handleDownload}
           disabled={loading || !url.trim()}
-          className={`px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-2.5 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 ${platformClass}`}
+          className={`px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-semibold text-sm flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed ${platformClass}`}
         >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
           <span className="hidden sm:inline">{loading ? "Fetching..." : "Download"}</span>
         </button>
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="glass-card rounded-2xl p-4 flex items-center gap-3 text-destructive text-sm animate-scale-in border-destructive/20">
+        <div className="glass rounded-2xl p-4 flex items-center gap-3 text-destructive text-sm animate-scale-in">
           <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>
       )}
 
+      {/* Results */}
       {result && (
-        <div className="glass-card-solid rounded-2xl overflow-hidden animate-slide-up">
+        <div className="glass-strong rounded-2xl overflow-hidden animate-slide-up">
           {result.thumbnail && (
             <div className="relative overflow-hidden">
-              <img src={result.thumbnail} alt={result.title || "Thumbnail"} className="w-full h-48 object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+              <img src={result.thumbnail} alt={result.title || "Thumbnail"} className="w-full h-44 sm:h-52 object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
             </div>
           )}
-          <div className="p-5 space-y-4">
+          <div className="p-4 sm:p-5 space-y-4">
             {result.title && (
-              <h3 className="font-display font-semibold text-foreground text-base leading-snug">{result.title}</h3>
+              <h3 className="font-display font-semibold text-foreground text-sm sm:text-base leading-snug">{result.title}</h3>
             )}
             {result.medias && result.medias.length > 0 && (
               <div className="space-y-2">
@@ -91,10 +94,10 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
                     href={media.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between glass-input-bar rounded-xl px-4 py-3 hover:bg-accent/30 transition-all duration-200 group animate-fade-up"
+                    className="flex items-center justify-between glass-subtle rounded-xl px-4 py-3 hover:bg-primary/5 transition-all duration-200 group animate-fade-up"
                     style={{ animationDelay: `${i * 0.06}s` }}
                   >
-                    <span className="text-sm text-secondary-foreground font-medium">
+                    <span className="text-sm text-foreground font-medium">
                       {media.quality || media.extension || media.type || `Option ${i + 1}`}
                     </span>
                     <Download className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -107,7 +110,7 @@ const DownloaderInput = ({ placeholder, platformClass }: DownloaderInputProps) =
                 href={result.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 active:scale-95 ${platformClass}`}
+                className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm ${platformClass}`}
               >
                 <Download className="h-4 w-4" />
                 Download Now
